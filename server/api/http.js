@@ -35,4 +35,3 @@ export function deleteEvent(req, res) {
     res.json({error: err, event: req.body});
   });
 }
-

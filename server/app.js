@@ -3,6 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import xss from 'xss';
 
 import * as eventService from './api/service/event';
 
@@ -16,6 +17,7 @@ import createHistory from 'history/lib/createMemoryHistory';
 
 
 export function handleRender(req, res) {
+
   eventService.getEvents()
   .then(initialEvents => {
 
@@ -34,6 +36,8 @@ export function handleRender(req, res) {
 
     // Wire up routing based upon routes
     store.dispatch(match(req.url, (error, redirectLocation, renderProps) => {
+
+      console.log(renderProps);
       if (error)  {
         console.log('Error', error);
         res.status(400);
